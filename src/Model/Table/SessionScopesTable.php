@@ -2,6 +2,7 @@
 namespace OAuthServer\Model\Table;
 
 use Cake\ORM\Table;
+use Cake\Database\Schema\TableSchema;
 
 class SessionScopesTable extends Table
 {
@@ -11,13 +12,28 @@ class SessionScopesTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('oauth_session_scopes');
+        $this->setTable('oauth_session_scopes');
         $this->belongsTo('Sessions', [
                 'className' => 'OAuthServer.Sessions',
             ]);
         $this->belongsTo('Scopes', [
                 'className' => 'OAuthServer.Scopes'
             ]);
+
+        $table = new TableSchema($this->getTable());
+        $table
+            ->addColumn('session_id', 'integer', [
+                'default' => null,
+                'limit' => 11,
+                'null' => false,
+            ])
+            ->addColumn('scope_id', 'string', [
+                'default' => '',
+                'limit' => 200,
+                'null' => false,
+            ]);
+        $this->setSchema($table);
+
         parent::initialize($config);
     }
 }

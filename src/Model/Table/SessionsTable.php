@@ -2,6 +2,7 @@
 namespace OAuthServer\Model\Table;
 
 use Cake\ORM\Table;
+use Cake\Database\Schema\TableSchema;
 
 class SessionsTable extends Table
 {
@@ -11,7 +12,7 @@ class SessionsTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('oauth_sessions');
+        $this->setTable('oauth_sessions');
         $this->hasMany('SessionScopes', [
                 'className' => 'OAuthServer.SessionScopes',
                 'foreignKey' => 'session_id',
@@ -36,6 +37,41 @@ class SessionsTable extends Table
                 'className' => 'OAuthServer.Clients',
                 'foreignKey' => 'client_id'
             ]);
+
+        $table = new TableSchema($this->getTable());
+        $table
+            ->addColumn('id', [
+                'type' => 'string',
+                'length' => 40,
+                'null' => false
+            ])
+            ->addColumn('owner_model', 'string', [
+                'default' => '',
+                'limit' => 200,
+                'null' => false,
+            ])
+            ->addColumn('owner_id', 'string', [
+                'default' => '',
+                'limit' => 20,
+                'null' => false,
+            ])
+            ->addColumn('client_id', 'string', [
+                'default' => null,
+                'limit' => 20,
+                'null' => false,
+            ])
+            ->addColumn('client_redirect_uri', 'string', [
+                'default' => null,
+                'limit' => 200,
+                'null' => true,
+            ]);
+
+        $table->addConstraint('primary', [
+          'type' => 'primary',
+          'columns' => ['id']
+        ]);
+        $this->setSchema($table);
+
         parent::initialize($config);
     }
 }

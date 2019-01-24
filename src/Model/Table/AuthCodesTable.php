@@ -3,6 +3,7 @@
 namespace OAuthServer\Model\Table;
 
 use Cake\ORM\Table;
+use Cake\Database\Schema\TableSchema;
 
 /**
  * AuthCode Model
@@ -18,7 +19,7 @@ class AuthCodesTable extends Table
      */
     public function initialize(array $config)
     {
-        $this->table('oauth_auth_codes');
+        $this->setTable('oauth_auth_codes');
         $this->primaryKey('code');
 
         $this->belongsTo(
@@ -36,6 +37,31 @@ class AuthCodesTable extends Table
                 'dependant' => true
             ]
         );
+
+        $table = new TableSchema($this->getTable());
+        $table
+            ->addColumn('code', 'string', [
+                'default' => null,
+                'limit' => 40,
+                'null' => false,
+            ])
+            ->addColumn('session_id', 'integer', [
+                'default' => null,
+                'limit' => 11,
+                'null' => false,
+            ])
+            ->addColumn('redirect_uri', 'string', [
+                'default' => null,
+                'limit' => 200,
+                'null' => false,
+            ])
+            ->addColumn('expires', 'integer', [
+                'default' => null,
+                'limit' => 11,
+                'null' => false,
+            ]);
+        $this->setSchema($table);
+
         parent::initialize($config);
     }
 }
