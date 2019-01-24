@@ -22,6 +22,12 @@ class SessionScopesTable extends Table
 
         $table = new TableSchema($this->getTable());
         $table
+            ->addColumn('id', [
+                'type' => 'integer',
+                'length' => 11,
+                'null' => false,
+                'autoIncrement' => true,
+            ])
             ->addColumn('session_id', 'integer', [
                 'default' => null,
                 'limit' => 11,

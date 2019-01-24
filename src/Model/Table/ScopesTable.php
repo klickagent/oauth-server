@@ -38,6 +38,11 @@ class ScopesTable extends Table
             ]);
         $this->setSchema($table);
 
+        $table->addConstraint('primary', [
+          'type' => 'primary',
+          'columns' => ['id']
+        ]);
+
         parent::initialize($config);
     }
 }

@@ -41,9 +41,10 @@ class SessionsTable extends Table
         $table = new TableSchema($this->getTable());
         $table
             ->addColumn('id', [
-                'type' => 'string',
-                'length' => 40,
-                'null' => false
+                'type' => 'integer',
+                'length' => 11,
+                'null' => false,
+                'autoIncrement' => true,
             ])
             ->addColumn('owner_model', 'string', [
                 'default' => '',
