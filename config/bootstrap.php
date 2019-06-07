@@ -8,4 +8,6 @@ use Cake\Core\Configure;
  */
 $appControllerReal = Configure::read('OAuthServer.appController') ?: 'App\Controller\AppController';
 $appControllerAlias = 'OAuthServer\Controller\AppController';
-class_alias($appControllerReal, $appControllerAlias);
+if(!class_exists($appControllerAlias)){
+	class_alias($appControllerReal, $appControllerAlias);
+}

@@ -24,6 +24,12 @@ class AuthCodeScopesTable extends Table
 
         $table = new TableSchema($this->getTable());
         $table
+            ->addColumn('id', [
+                'type' => 'integer',
+                'length' => 11,
+                'null' => false,
+                'autoIncrement' => true,
+            ])
             ->addColumn('auth_code', 'string', [
                 'default' => null,
                 'limit' => 40,
@@ -34,6 +40,12 @@ class AuthCodeScopesTable extends Table
                 'limit' => 200,
                 'null' => false,
             ]);
+
+        $table->addConstraint('primary', [
+          'type' => 'primary',
+          'columns' => ['id']
+        ]);
+
         $this->setSchema($table);
         parent::initialize($config);
     }

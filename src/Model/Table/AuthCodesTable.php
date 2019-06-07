@@ -62,6 +62,11 @@ class AuthCodesTable extends Table
             ]);
         $this->setSchema($table);
 
+        $table->addConstraint('primary', [
+          'type' => 'primary',
+          'columns' => ['code']
+        ]);
+
         parent::initialize($config);
     }
 }
